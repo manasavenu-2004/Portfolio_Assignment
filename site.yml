@@ -1,0 +1,7 @@
+---
+- name: Deploy Portfolio Website
+  hosts: all
+  become: true
+
+  roles:
+    - portfolio

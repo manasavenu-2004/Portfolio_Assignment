@@ -1,0 +1,29 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for portfolio
+- name: Update apt package list
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Install Nginx package
+  ansible.builtin.package:
+    name: "{{ nginx_package_name }}"
+    state: present
+
+- name: Ensure Nginx service is started and enabled
+  ansible.builtin.service:
+    name: "{{ nginx_service_name }}"
+    state: started
+    enabled: true
+
+- name: Copy portfolio files to Nginx directory
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ web_destination_path }}/{{ item }}"
+    mode: "{{ portfolio_file_permission }}"
+  loop:
+    - index.html
+    - about.html
+    - projects.html
+    - contact.html
+    - style.css
